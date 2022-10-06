@@ -8,7 +8,7 @@ dotenv.config();
 export async function createtUser(user) {
   const { email, password } = user;
   const { rows: hasUser } = await findUserByEmail(email);
-  console.log(hasUser)
+  console.log(hasUser);
   if (hasUser.length > 0) {
     throw {
       type: "conflict",
@@ -24,17 +24,17 @@ export async function createtUser(user) {
 
 export async function connectUser(user) {
   const { email, password } = user;
-  const hasUser = await findUserByEmail(email);
-  const id = hasUser?.id;
+  const { rows } = await findUserByEmail(email);
+  const id = rows[0].id;
 
-  if (!hasUser) {
+  if (rows.length < 1) {
     throw {
       type: "conflict",
       message: "User not found, please create an account to continue",
     };
   }
 
-  const validatePassword = await bcrypt.compare(password, hasUser.password);
+  const validatePassword = await bcrypt.compare(password, rows[0].password);
   if (!validatePassword) {
     throw {
       type: "unauthorized",
