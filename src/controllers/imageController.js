@@ -14,10 +14,9 @@ export async function getImageByName(req, res) {
 
   res.status(200).sendFile(image, options, function (err) {
     if (err) {
-      next(err);
+      console.log(err);
     } else {
       console.log("Sent:", image);
-      next();
     }
   });
 }

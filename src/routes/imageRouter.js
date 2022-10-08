@@ -4,6 +4,6 @@ import { getImageByName } from "../controllers/imageController.js"
 
 const imageRouter = Router();
 
-imageRouter.get("/image/:name", jwtMiddleware, getImageByName);
+imageRouter.get("/image/:name", getImageByName);
 
 export default imageRouter;
