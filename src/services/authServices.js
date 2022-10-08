@@ -8,24 +8,23 @@ dotenv.config();
 export async function createtUser(user) {
   const { email, password } = user;
   const { rows: hasUser } = await findUserByEmail(email);
-  console.log(hasUser);
   if (hasUser.length > 0) {
     throw {
       type: "conflict",
       message: "User already registered, please login to continue",
     };
   }
-  const encriptedPassword = bcrypt.hashSync(password, 10);
+  const encryptedPassword = bcrypt.hashSync(password, 10);
   await authRepository.createUser({
     ...user,
-    password: encriptedPassword,
+    password: encryptedPassword,
   });
 }
 
 export async function connectUser(user) {
   const { email, password } = user;
   const { rows } = await findUserByEmail(email);
-  const { id, userName, userStatus, userImaege} = rows[0];
+  const { id, userName, userStatus, userImage } = rows[0];
 
   if (rows.length < 1) {
     throw {
@@ -42,13 +41,28 @@ export async function connectUser(user) {
     };
   }
 
-  const token = jwt.sign({ id, userName, userStatus, userImaege }, String(process.env.JWT_KEY), {
-    expiresIn: process.env.TOKEN_DURATION,
-  });
+  const token = jwt.sign(
+    { id, userName, userStatus, userImage },
+    String(process.env.JWT_KEY),
+    {
+      expiresIn: process.env.TOKEN_DURATION,
+    }
+  );
   return token;
 }
 
 async function findUserByEmail(email) {
   const user = await authRepository.findUserByEmail(email);
   return user;
+}
+
+export async function getUserData(id) {
+  const { rows: userData } = await authRepository.getUserData(id);
+  return userData;
+}
+
+export async function updateUserData(password, userName, userImage, id) {
+  const encryptedPassword = bcrypt.hashSync(password, 10);
+  const { rows: userData } = await authRepository.updateUserData(encryptedPassword, userName, userImage, id);
+  return userData;
 }

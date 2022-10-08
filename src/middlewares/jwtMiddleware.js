@@ -22,6 +22,7 @@ export default async function jwtMiddleware(req, res, next) {
     }
 
     const userData = decoded;
+    console.log(userData)
     res.locals.userData = userData;
   } catch (error) {
     res
