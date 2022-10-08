@@ -13,10 +13,10 @@ export async function getMyPokedex(userId) {
         break
       }
       pokedex.push({...pokemons[j], hasIt: false})
+      break
     }
   }
-
-  return pokedex.sort();
+  return pokedex;
 }
 
 

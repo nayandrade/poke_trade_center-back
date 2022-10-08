@@ -21,6 +21,7 @@ export async function getAllPokemons() {
   return await connection.query(
     `
     SELECT * FROM pokemons
+    ORDER BY number
     `
   )
 }

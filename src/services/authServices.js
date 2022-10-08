@@ -24,7 +24,7 @@ export async function createtUser(user) {
 export async function connectUser(user) {
   const { email, password } = user;
   const { rows } = await findUserByEmail(email);
-  const { id, userName, userStatus, userImaege } = rows[0];
+  const { id, userName, userStatus, userImage } = rows[0];
 
   if (rows.length < 1) {
     throw {
@@ -42,7 +42,7 @@ export async function connectUser(user) {
   }
 
   const token = jwt.sign(
-    { id, userName, userStatus, userImaege },
+    { id, userName, userStatus, userImage },
     String(process.env.JWT_KEY),
     {
       expiresIn: process.env.TOKEN_DURATION,
