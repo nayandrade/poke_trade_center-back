@@ -46,3 +46,15 @@ export async function updateUserData(password, userName, userImage, id) {
     [password, userName, userImage, id]
   );
 }
+
+export async function updateTimestamp(id) {
+  console.log(id);
+  return await connection.query(
+    `
+    UPDATE users SET "dailyCardsTimeStamp" = NOW()
+    WHERE id = $1
+    RETURNING *
+  `,
+    [id]
+  );
+}

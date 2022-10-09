@@ -66,3 +66,8 @@ export async function updateUserData(password, userName, userImage, id) {
   const { rows: userData } = await authRepository.updateUserData(encryptedPassword, userName, userImage, id);
   return userData;
 }
+
+export async function updateTimestamp(id) {
+  const { rows } = await authRepository.updateTimestamp(id)
+  return rows
+}
