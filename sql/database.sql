@@ -3,8 +3,8 @@ CREATE TABLE "users" (
 	"email" varchar(255) NOT NULL UNIQUE,
 	"password" TEXT NOT NULL,
 	"userName" TEXT NOT NULL,
-	"userStatus" TEXT NOT NULL,
-	"userImage" TEXT NOT NULL,
+	"userStatus" TEXT DEFAULT 'user',
+	"userImage" TEXT,
 	CONSTRAINT "users_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -49,12 +49,16 @@ CREATE TABLE "usersPokemons" (
 	"userId" integer NOT NULL,
 	"pokemonId" integer NOT NULL,
 	"isForSale" BOOLEAN NOT NULL DEFAULT 'false',
+	"pokeIntent" integer,
 	"lastUpdate" time with time zone NOT NULL DEFAULT NOW(),
 	"deletedAt" time with time zone,
+
 	CONSTRAINT "usersPokemons_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
 );
+
+
 
 
 

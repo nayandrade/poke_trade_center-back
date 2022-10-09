@@ -25,4 +25,9 @@ export async function getMyPokedex(userId) {
   return pokedex;
 }
 
+export async function getAllPokemons() {
+  const { rows: pokemons } = await pokedexRepository.getAllPokemons(); 
+  return pokemons
+}
+
 
