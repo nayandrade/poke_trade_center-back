@@ -1,5 +1,5 @@
 import * as marketRepository from "../repositories/marketRepository.js";
-import * as pokedexServices from "../services/pokedexServices.js"
+import * as pokedexServices from "../services/pokedexServices.js";
 
 export async function getMarket(userId) {
   const { rows: market } = await marketRepository.getMarket(userId);
@@ -25,10 +25,41 @@ export async function postIntoMarket(userId, cardId, pokeintent) {
       message: "Card not found",
     };
   }
-  const { rows: newMarketInput } = await marketRepository.postIntoMarket(cardId, pokeintent)
-  return newMarketInput
+  const { rows: newMarketInput } = await marketRepository.postIntoMarket(
+    cardId,
+    pokeintent
+  );
+  return newMarketInput;
 }
 
 export async function getAllPokemons() {
-    return await pokedexServices.getAllPokemons()
+  return await pokedexServices.getAllPokemons();
+}
+
+export async function getOwnerId(cardId) {
+  const { rows: pokemons } = await marketRepository.getOwnerId(cardId);
+  const ownerId = pokemons[0].userId;
+  console.log(pokemons);
+  return ownerId;
+}
+
+export async function tradeFromMarket(
+  userId,
+  userCardId,
+  previousOwnerId,
+  pokeid,
+  pokeintent
+) {
+  const validate = await marketRepository.validateCardToTrade(pokeid, pokeintent)
+
+  if(validate.length < 1) {
+    throw {
+      type: "not_found",
+      message: "Card is not for trade",
+    };
+  }
+  const { rows: firstTrade } = await marketRepository.updateOwner(userId, pokeid);
+  const { rows: secondTrade } = await marketRepository.updateOwner(previousOwnerId, userCardId);
+
+  return firstTrade
 }

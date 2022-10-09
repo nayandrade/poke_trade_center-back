@@ -3,7 +3,8 @@ import { connection } from "../database/database.js";
 export async function getMarket(userId) {
   return await connection.query(
     `
-        SELECT * from "usersPokemons"
+        SELECT "usersPokemons".*, pokemons.number, pokemons.name, pokemons."pokemonImage"
+        FROM "usersPokemons"
         JOIN pokemons
         ON "usersPokemons"."pokemonId" = pokemons.id
         WHERE "userId" <> $1
@@ -50,5 +51,42 @@ export async function validateOwner(userId, cardId) {
     
     `,
     [userId, cardId]
+  );
+}
+
+export async function getOwnerId(cardId) {
+  return await connection.query(
+    `
+        SELECT *
+        FROM "usersPokemons"
+        WHERE id = $1
+    `,
+    [cardId]
+  );
+}
+
+export async function updateOwner(ownerId, cardId) {
+  return await connection.query(
+    `
+        UPDATE "usersPokemons" SET "userId" = $1, "isForSale" = false, "lastUpdate" = NOW(), "pokeIntent" = null
+        WHERE id = $2
+        RETURNING *
+    `,
+    [ownerId, cardId]
+  );
+}
+
+export async function validateCardToTrade(pokeid, pokeintent) {
+  return await connection.query(
+    `
+      SELECT "usersPokemons".*, pokemons.number, pokemons.name, pokemons."pokemonImage"
+      FROM "usersPokemons"
+      JOIN pokemons
+      ON "usersPokemons"."pokemonId" = pokemons.id
+      WHERE "usersPokemons".id = $1
+      AND "usersPokemons"."pokeIntent" = $2
+      AND "isForSale" = true
+    `,
+    [pokeid, pokeintent]
   );
 }
