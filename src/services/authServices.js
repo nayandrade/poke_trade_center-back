@@ -24,15 +24,16 @@ export async function createtUser(user) {
 export async function connectUser(user) {
   const { email, password } = user;
   const { rows } = await findUserByEmail(email);
-  const { id, userName, userStatus, userImage } = rows[0];
 
-  if (rows.length < 1) {
+  if (rows.length === 0) {
     throw {
       type: "conflict",
       message: "User not found, please create an account to continue",
     };
   }
 
+  const { id, userName, userStatus, userImage } = rows[0];
+  
   const validatePassword = await bcrypt.compare(password, rows[0].password);
   if (!validatePassword) {
     throw {
@@ -63,11 +64,16 @@ export async function getUserData(id) {
 
 export async function updateUserData(password, userName, userImage, id) {
   const encryptedPassword = bcrypt.hashSync(password, 10);
-  const { rows: userData } = await authRepository.updateUserData(encryptedPassword, userName, userImage, id);
+  const { rows: userData } = await authRepository.updateUserData(
+    encryptedPassword,
+    userName,
+    userImage,
+    id
+  );
   return userData;
 }
 
 export async function updateTimestamp(id) {
-  const { rows } = await authRepository.updateTimestamp(id)
-  return rows
+  const { rows } = await authRepository.updateTimestamp(id);
+  return rows;
 }
