@@ -7,6 +7,12 @@ export async function getMarket(userId) {
   return market;
 }
 
+export async function getMyMarket(userId) {
+  const { rows: market } = await marketRepository.getMyMarket(userId);
+
+  return market;
+}
+
 export async function getCardId(userId, pokenumber) {
   const { rows: pokemons } = await marketRepository.getCardId(
     userId,
