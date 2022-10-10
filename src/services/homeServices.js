@@ -26,8 +26,15 @@ export async function getMyHomepage(id) {
       cards[3],
       cards[4]
     );
+    console.log('figurinhas novas')
 
     return newCards
+  } else {
+    
+    console.log('figurinhas antigas')
+    const { rows: previousCards} = await homeRepository.getOlderCards(id)
+
+    return previousCards
   }
 }
 
@@ -45,6 +52,7 @@ function checkTime(lastUpdate) {
   const now = Date.now(); 
   const day = 24 * 60 * 60; 
   const difference = now - day; 
+  console.log(difference, lastUpdate)
 
   if (lastUpdate < difference) {
     return true;
