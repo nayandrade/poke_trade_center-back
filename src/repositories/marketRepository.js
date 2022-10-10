@@ -3,14 +3,16 @@ import { connection } from "../database/database.js";
 export async function getMarket(userId) {
   return await connection.query(
     `
-      SELECT "usersPokemons".*, users."userName", p.number as "pokeIntentNumber", p.name as "pokeIntentName", p."pokemonImage" as "pokeIntentImage", pokemons.number, pokemons.name, pokemons."pokemonImage"
+      SELECT "usersPokemons".*, users."userName", p.number as "pokeIntentNumber", 
+      p.name as "pokeIntentName", p."pokemonImage" as "pokeIntentImage", pokemons.number, 
+      pokemons.name, pokemons."pokemonImage"
       FROM "usersPokemons"
-      JOIN pokemons p
-      ON "usersPokemons"."pokemonId" = p.id
+      JOIN pokemons 
+      ON "usersPokemons"."pokemonId" = pokemons.id
       JOIN users
       ON "usersPokemons"."userId" = users.id
-      JOIN pokemons
-      ON "usersPokemons"."pokeIntent" = pokemons.number
+      JOIN pokemons p
+      ON "usersPokemons"."pokeIntent" = p.number
       WHERE "userId" <> $1
       AND "isForSale" = true
       ORDER BY "lastUpdate"

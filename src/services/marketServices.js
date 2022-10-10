@@ -68,8 +68,8 @@ export async function tradeFromMarket(
 
   if(validate.length < 1) {
     throw {
-      type: "not_found",
-      message: "Card is not for trade",
+      type: "bad_request",
+      message: "Card is not available for exchange",
     };
   }
   const { rows: firstTrade } = await marketRepository.updateOwner(userId, pokeid);
