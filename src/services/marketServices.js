@@ -13,7 +13,7 @@ export async function getCardId(userId, pokenumber) {
     pokenumber
   );
   const pokemonId = pokemons[0].id;
-  console.log(pokemons);
+
   return pokemonId;
 }
 
@@ -39,7 +39,7 @@ export async function getAllPokemons() {
 export async function getOwnerId(cardId) {
   const { rows: pokemons } = await marketRepository.getOwnerId(cardId);
   const ownerId = pokemons[0].userId;
-  console.log(pokemons);
+
   return ownerId;
 }
 

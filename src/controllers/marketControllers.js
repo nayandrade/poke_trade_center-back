@@ -11,7 +11,6 @@ export async function postIntoMarket(req, res) {
   const { id: userId } = res.locals.userData;
   const { pokenumber, pokeintent } = req.params;
   const cardId = await marketServices.getCardId(userId, pokenumber);
-  console.log(userId, cardId, pokeintent);
   const market = await marketServices.postIntoMarket(
     userId,
     cardId,

@@ -41,10 +41,10 @@ function giveNewCards() {
 }
 
 function checkTime(lastUpdate) {
-  // 10000
-  const now = Date.now(); // 100000
-  const day = 24 * 60 * 60; // 86400
-  const difference = now - day; // 100000 - 86400 = 13600
+
+  const now = Date.now(); 
+  const day = 24 * 60 * 60; 
+  const difference = now - day; 
 
   if (lastUpdate < difference) {
     return true;

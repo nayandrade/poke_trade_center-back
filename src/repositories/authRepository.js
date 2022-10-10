@@ -36,7 +36,7 @@ export async function getUserData(id) {
 }
 
 export async function updateUserData(password, userName, userImage, id) {
-  console.log(id);
+
   return await connection.query(
     `
     UPDATE users SET "password" = $1, "userName" = $2, "userImage" = $3
@@ -48,7 +48,7 @@ export async function updateUserData(password, userName, userImage, id) {
 }
 
 export async function updateTimestamp(id) {
-  console.log(id);
+
   return await connection.query(
     `
     UPDATE users SET "dailyCardsTimeStamp" = NOW()

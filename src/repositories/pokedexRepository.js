@@ -10,6 +10,7 @@ export async function getMyPokedex(userId) {
     JOIN users
     ON "usersPokemons"."userId" = users.id
     WHERE "userId" = $1
+    AND "isForSale" = false
     GROUP BY users."userName", pokemons.id, users.id, "usersPokemons"."isForSale", pokemons.number, pokemons.name
     ORDER BY number
     `,
