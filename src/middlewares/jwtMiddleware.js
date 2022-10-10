@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 export default async function jwtMiddleware(req, res, next) {
   const { authorization } = req.headers;
-  const token = authorization?.replace("Bearer ", "");
+  const token = authorization?.replaceAll('"', "");
 
   if (!token) {
     throw {
@@ -22,7 +22,6 @@ export default async function jwtMiddleware(req, res, next) {
     }
 
     const userData = decoded;
-    console.log(userData)
     res.locals.userData = userData;
   } catch (error) {
     res
