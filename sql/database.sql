@@ -5,6 +5,7 @@ CREATE TABLE "users" (
 	"userName" TEXT NOT NULL,
 	"userStatus" TEXT DEFAULT 'user',
 	"userImage" TEXT,
+	"dailyCardsTimeStamp" time without time zone,
 	CONSTRAINT "users_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
