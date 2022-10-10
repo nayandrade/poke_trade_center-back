@@ -19,7 +19,7 @@ export async function getCardId(userId, pokenumber) {
     pokenumber
   );
 
-  if(pokemons.length < 1) {
+  if (pokemons.length < 1) {
     throw {
       type: "not_found",
       message: "Pokemon not found",
@@ -52,7 +52,7 @@ export async function getAllPokemons() {
 export async function getOwnerId(cardId) {
   const { rows: pokemons } = await marketRepository.getOwnerId(cardId);
 
-  if(pokemons.length < 1) {
+  if (pokemons.length < 1) {
     throw {
       type: "not_found",
       message: "User not found",
@@ -70,16 +70,39 @@ export async function tradeFromMarket(
   pokeid,
   pokeintent
 ) {
-  const validate = await marketRepository.validateCardToTrade(pokeid, pokeintent)
+  const validate = await marketRepository.validateCardToTrade(
+    pokeid,
+    pokeintent
+  );
 
-  if(validate.length < 1) {
+  if (validate.length < 1) {
     throw {
       type: "bad_request",
       message: "Card is not available for exchange",
     };
   }
-  const { rows: firstTrade } = await marketRepository.updateOwner(userId, pokeid);
-  const { rows: secondTrade } = await marketRepository.updateOwner(previousOwnerId, userCardId);
+  const { rows: firstTrade } = await marketRepository.updateOwner(
+    userId,
+    pokeid
+  );
+  const { rows: secondTrade } = await marketRepository.updateOwner(
+    previousOwnerId,
+    userCardId
+  );
 
-  return firstTrade
+  return firstTrade;
+}
+
+export async function deleteFromMarket(userId, cardId) {
+  const validateOwner = await marketRepository.validateOwner(userId, cardId);
+  if (validateOwner.length < 1) {
+    throw {
+      type: "not_found",
+      message: "Card not found",
+    };
+  }
+
+  const { rows: canceledTrade } = await marketRepository.cancelTrade(cardId);
+
+  return canceledTrade;
 }
