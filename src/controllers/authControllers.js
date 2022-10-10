@@ -6,7 +6,7 @@ export async function signup(req, res) {
   res.sendStatus(201);
 }
 
-export async function signin(req, res) {
+export async function signin(req, res) {  
   const user = req.body;
   const token = await authServices.connectUser(user);
 

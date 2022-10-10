@@ -3,6 +3,7 @@ export function isAppError(error) {
 }
 
 export function errorTypeToStatusCode(type) {
+  if (type === "bad_request") return 400;
   if (type === "unauthorized") return 401;
   if (type === "not_found") return 404;
   if (type === "conflict") return 409;
