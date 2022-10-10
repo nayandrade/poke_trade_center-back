@@ -7,7 +7,7 @@ const marketRouter = Router();
 
 marketRouter.get("/market", jwtMiddleware, getMarket);
 marketRouter.post("/market/:pokenumber/:pokeintent", jwtMiddleware, postIntoMarket);
-marketRouter.post("/buy/:pokeintent/:pokeid", jwtMiddleware, tradeFromMarket);
+marketRouter.post("/trade/:pokeintent/:pokeid", jwtMiddleware, tradeFromMarket);
 marketRouter.get('/allpokemons', jwtMiddleware, getAllPokemons)
 
 export default marketRouter;
