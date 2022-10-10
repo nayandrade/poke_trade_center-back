@@ -1,6 +1,6 @@
 import { Router } from "express";
 import jwtMiddleware from "../middlewares/jwtMiddleware.js";
-import { getMarket, postIntoMarket, getAllPokemons, tradeFromMarket, getMyMarket } from "../controllers/marketControllers.js";
+import { getMarket, postIntoMarket, getAllPokemons, tradeFromMarket, getMyMarket, deleteFromMarket } from "../controllers/marketControllers.js";
 
 
 const marketRouter = Router();
@@ -10,5 +10,6 @@ marketRouter.post("/market/:pokenumber/:pokeintent", jwtMiddleware, postIntoMark
 marketRouter.post("/trade/:pokeintent/:pokeid", jwtMiddleware, tradeFromMarket);
 marketRouter.get('/allpokemons', jwtMiddleware, getAllPokemons)
 marketRouter.get("/mymarket", jwtMiddleware, getMyMarket);
+marketRouter.delete("/mymarket/:id", jwtMiddleware, deleteFromMarket);
 
 export default marketRouter;

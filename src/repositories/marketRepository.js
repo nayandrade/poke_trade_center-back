@@ -125,3 +125,14 @@ export async function validateCardToTrade(pokeid, pokeintent) {
     [pokeid, pokeintent]
   );
 }
+
+export async function cancelTrade(cardId) {
+  return await connection.query(
+    `
+      UPDATE "usersPokemons" SET "isForSale" = false, "pokeIntent" = null, "lastUpdate" = NOW()
+      WHERE id = $1
+      RETURNING *
+    `,
+    [cardId]
+  );
+}

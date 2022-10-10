@@ -48,3 +48,13 @@ export async function tradeFromMarket(req, res) {
   );
   res.status(200).send(trade);
 }
+
+export async function deleteFromMarket(req, res) {
+  const { id: userId } = res.locals.userData;
+  const { id } = req.params;
+
+  const deletedCard = await marketServices.deleteFromMarket(userId, id);
+
+  res.status(202).send(deletedCard);
+
+}
