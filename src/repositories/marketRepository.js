@@ -17,19 +17,39 @@ export async function getMarket(userId) {
       AND "isForSale" = true
       ORDER BY "lastUpdate"
       `,
-      [userId]
-      );
-    }
-    // SELECT "usersPokemons".*, pokemons.number, pokemons.name, pokemons."pokemonImage"
-    // FROM "usersPokemons"
-    // JOIN pokemons
-    // ON "usersPokemons"."pokemonId" = pokemons.id
-    // JOIN users
-    // ON "usersPokemon"."userId" = users.id
-    // WHERE "userId" <> $1
-    // AND "isForSale" = true
-    // ORDER BY "lastUpdate"
+    [userId]
+  );
+}
+// SELECT "usersPokemons".*, pokemons.number, pokemons.name, pokemons."pokemonImage"
+// FROM "usersPokemons"
+// JOIN pokemons
+// ON "usersPokemons"."pokemonId" = pokemons.id
+// JOIN users
+// ON "usersPokemon"."userId" = users.id
+// WHERE "userId" <> $1
+// AND "isForSale" = true
+// ORDER BY "lastUpdate"
 
+export async function getMyMarket(userId) {
+  return await connection.query(
+    `
+      SELECT "usersPokemons".*, users."userName", p.number as "pokeIntentNumber", 
+      p.name as "pokeIntentName", p."pokemonImage" as "pokeIntentImage", pokemons.number, 
+      pokemons.name, pokemons."pokemonImage"
+      FROM "usersPokemons"
+      JOIN pokemons 
+      ON "usersPokemons"."pokemonId" = pokemons.id
+      JOIN users
+      ON "usersPokemons"."userId" = users.id
+      JOIN pokemons p
+      ON "usersPokemons"."pokeIntent" = p.number
+      WHERE "userId" = $1
+      AND "isForSale" = true
+      ORDER BY "lastUpdate"
+      `,
+    [userId]
+  );
+}
 export async function getCardId(userId, pokenumber) {
   return await connection.query(
     `

@@ -7,6 +7,13 @@ export async function getMarket(req, res) {
   res.status(200).send(market);
 }
 
+export async function getMyMarket(req, res) {
+  const { id } = res.locals.userData;
+  const market = await marketServices.getMyMarket(id);
+
+  res.status(200).send(market);
+}
+
 export async function postIntoMarket(req, res) {
   const { id: userId } = res.locals.userData;
   const { pokenumber, pokeintent } = req.params;

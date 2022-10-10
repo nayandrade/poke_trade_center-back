@@ -30,13 +30,14 @@ export async function insertNewCards(num1, num2, num3, num4, num5, id) {
 
 export async function getOlderCards(id) {
   return await connection.query(`
-  SELECT pokemons.* from "usersPokemons"
+  SELECT "usersPokemons".id, pokemons.number, pokemons.name, pokemons."pokemonImage"  
+  FROM "usersPokemons"
   JOIN pokemons
   ON "usersPokemons"."pokemonId" = pokemons.id
-  WHERE "userId" = 5
-  ORDER BY id
+  WHERE "userId" = $1
+  ORDER by id
   DESC
   LIMIT 5
-  `)
+  `, [id])
 }
 
