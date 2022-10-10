@@ -28,13 +28,19 @@ export async function getMyHomepage(id) {
     );
     console.log('figurinhas novas')
 
-    return newCards
+    return {
+      cards: newCards,
+      status: "newCards"
+    }
   } else {
-    
+
     console.log('figurinhas antigas')
     const { rows: previousCards} = await homeRepository.getOlderCards(id)
 
-    return previousCards
+    return {
+      cards: previousCards,
+      status: "previousCards"
+    }
   }
 }
 
