@@ -12,8 +12,15 @@ export async function getCardId(userId, pokenumber) {
     userId,
     pokenumber
   );
-  const pokemonId = pokemons[0].id;
 
+  if(pokemons.length < 1) {
+    throw {
+      type: "not_found",
+      message: "Pokemon not found",
+    };
+  }
+
+  const pokemonId = pokemons[0].id;
   return pokemonId;
 }
 
@@ -38,8 +45,15 @@ export async function getAllPokemons() {
 
 export async function getOwnerId(cardId) {
   const { rows: pokemons } = await marketRepository.getOwnerId(cardId);
-  const ownerId = pokemons[0].userId;
 
+  if(pokemons.length < 1) {
+    throw {
+      type: "not_found",
+      message: "User not found",
+    };
+  }
+
+  const ownerId = pokemons[0].userId;
   return ownerId;
 }
 

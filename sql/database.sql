@@ -48,7 +48,7 @@ CREATE TABLE "usersPokemons" (
 	"id" serial NOT NULL,
 	"userId" integer NOT NULL,
 	"pokemonId" integer NOT NULL,
-	"isForSale" BOOLEAN NOT NULL DEFAULT 'false',
+	"isForSale" BOOLEAN DEFAULT 'false',
 	"pokeIntent" integer,
 	"lastUpdate" time with time zone NOT NULL DEFAULT NOW(),
 	"deletedAt" time with time zone,
