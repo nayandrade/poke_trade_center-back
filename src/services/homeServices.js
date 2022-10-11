@@ -31,7 +31,8 @@ export async function getMyHomepage(id, userName, userImage) {
       cards: newCards,
       status: "newCards",
       userName: userName,
-      userImage: userImage
+      userImage: userImage,
+      classification: userData.classification,
     }
   } else {
 
@@ -42,7 +43,8 @@ export async function getMyHomepage(id, userName, userImage) {
       cards: previousCards,
       status: "previousCards",
       userName: userName,
-      userImage: userImage
+      userImage: userImage,
+      classification: userData.classification,
     }
   }
 }

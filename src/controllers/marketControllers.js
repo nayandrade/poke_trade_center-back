@@ -62,7 +62,7 @@ export async function searchFromMarketByNumber(req, res) {
   const { id: userId } = res.locals.userData;
   const { pokenumber } = req.params;
 
-  const filteredMarket = await marketServices.searchFromMarket(
+  const filteredMarket = await marketServices.searchFromMarketByNumber(
     userId,
     pokenumber
   );
@@ -74,7 +74,7 @@ export async function searchFromMarketByOwner(req, res) {
   const { id: userId } = res.locals.userData;
   const { pokeowner } = req.params;
 
-  const filteredMarket = await marketServices.searchFromMarket(
+  const filteredMarket = await marketServices.searchFromMarketByOwner(
     userId,
     pokeowner
   );
@@ -86,7 +86,7 @@ export async function searchFromMarketByName(req, res) {
   const { id: userId } = res.locals.userData;
   const { pokename } = req.params;
 
-  const filteredMarket = await marketServices.searchFromMarket(
+  const filteredMarket = await marketServices.searchFromMarketByName(
     userId,
     pokename
   );

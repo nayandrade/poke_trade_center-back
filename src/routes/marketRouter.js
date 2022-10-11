@@ -24,10 +24,10 @@ marketRouter.post("/trade/:pokeintent/:pokeid", jwtMiddleware, tradeFromMarket);
 marketRouter.get("/allpokemons", jwtMiddleware, getAllPokemons);
 marketRouter.get("/mymarket", jwtMiddleware, getMyMarket);
 marketRouter.delete("/mymarket/:id", jwtMiddleware, deleteFromMarket);
-marketRouter.get("/search/:pokename", jwtMiddleware, searchFromMarketByName);
-marketRouter.get("/search/:pokeowner", jwtMiddleware, searchFromMarketByOwner);
+marketRouter.get("/search/byname/:pokename", jwtMiddleware, searchFromMarketByName);
+marketRouter.get("/search/byowner/:pokeowner", jwtMiddleware, searchFromMarketByOwner);
 marketRouter.get(
-  "/search/:pokenumber",
+  "/search/bynumber/:pokenumber",
   jwtMiddleware,
   searchFromMarketByNumber
 );
