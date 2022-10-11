@@ -28,8 +28,12 @@ export async function findUserByEmail(email) {
 export async function getUserData(id) {
   return await connection.query(
     `
-  SELECT * FROM users
-  WHERE id = $1
+    SELECT users.*, COUNT(DISTINCT "usersPokemons"."pokemonId") as pokedex
+    FROM users
+    JOIN "usersPokemons"
+    ON users.id = "usersPokemons"."userId"
+    WHERE users.id = $1
+    GROUP BY users.id
   `,
     [id]
   );

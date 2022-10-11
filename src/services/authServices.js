@@ -59,8 +59,19 @@ async function findUserByEmail(email) {
 
 export async function getUserData(id) {
   const { rows: userData } = await authRepository.getUserData(id);
-  return userData;
+  if(userData.pokedex <= 76) {
+    return {...userData, classification: "Treinador"}
+  } 
+  if(userData.pokedex >= 77 && userData.pokedex <= 150 ) {
+    return {...userData, classification: "Líder de ginásio"}
+  }
+  if(userData.pokedex === 151) {
+    return {...userData, classification: "Mestre Pokemon"};
+  }
 }
+// Treinador = 76
+// Lider de ginásio = 77 < x < 150
+// Mestre pokemon = 151
 
 export async function updateUserData(password, userName, userImage, id) {
   const encryptedPassword = bcrypt.hashSync(password, 10);
