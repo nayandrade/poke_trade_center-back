@@ -1,5 +1,3 @@
-import { query } from "express";
-import { use } from "express/lib/router/index.js";
 import { connection } from "../database/database.js";
 
 export async function getMarket(userId) {
