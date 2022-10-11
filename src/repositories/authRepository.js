@@ -39,15 +39,15 @@ export async function getUserData(id) {
   );
 }
 
-export async function updateUserData(password, userName, userImage, id) {
+export async function updateUserData(password, userName, id) {
 
   return await connection.query(
     `
-    UPDATE users SET "password" = $1, "userName" = $2, "userImage" = $3
-    WHERE id = $4
+    UPDATE users SET "password" = $1, "userName" = $2
+    WHERE id = $3
     RETURNING *
   `,
-    [password, userName, userImage, id]
+    [password, userName, id]
   );
 }
 

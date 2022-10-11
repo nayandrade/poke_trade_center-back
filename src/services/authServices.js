@@ -77,15 +77,30 @@ export async function getUserData(userid) {
 // Lider de ginásio = 77 < x < 150
 // Mestre pokemon = 151
 
-export async function updateUserData(password, userName, userImage, id) {
+export async function updateUserData(password, userName, id) {
   const encryptedPassword = bcrypt.hashSync(password, 10);
   const { rows: userData } = await authRepository.updateUserData(
     encryptedPassword,
     userName,
-    userImage,
     id
   );
-  return userData;
+
+  const {
+    id: tokenId,
+    userName: tokenUserName,
+    userStatus: tokenUserStatus,
+    userImage: tokenUserImage,
+  } = userData[0];
+
+  const token = jwt.sign(
+    { id: tokenId, userName: tokenUserName, userStatus: tokenUserStatus, userImage: tokenUserImage },
+    String(process.env.JWT_KEY),
+    {
+      expiresIn: process.env.TOKEN_DURATION,
+    }
+  );
+
+  return {...userData[0], token: token};
 }
 
 export async function updateTimestamp(id) {
