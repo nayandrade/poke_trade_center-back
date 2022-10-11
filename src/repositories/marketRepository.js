@@ -149,7 +149,7 @@ export async function searchFromMarketByNumber(userId, number) {
     ON "usersPokemons"."userId" = users.id
     JOIN pokemons p
     ON "usersPokemons"."pokeIntent" = p.number
-    WHERE p.number ILIKE $2
+    WHERE pokemons.number = $2
 	  AND "userId" <> $1
     AND "isForSale" = true
     ORDER BY "lastUpdate"
@@ -174,7 +174,7 @@ export async function searchFromMarketByOwner(userId, owner) {
     AND "isForSale" = true
     ORDER BY "lastUpdate"
   
-  `, [userId, owner])
+  `, [userId, `${owner}%`])
 }
 
 export async function searchFromMarketByName(userId, name) {
@@ -189,10 +189,10 @@ export async function searchFromMarketByName(userId, name) {
     ON "usersPokemons"."userId" = users.id
     JOIN pokemons p
     ON "usersPokemons"."pokeIntent" = p.number
-    WHERE p.name ILIKE $2
+    WHERE pokemons.name ILIKE $2
 	  AND "userId" <> $1
     AND "isForSale" = true
     ORDER BY "lastUpdate"
   
-  `, [userId, name])
+  `, [userId, `${name}%`])
 }
