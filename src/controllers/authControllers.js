@@ -22,7 +22,7 @@ export async function getUserData(req, res) {
 
 export async function updateUserData(req, res) {
   const { id } = res.locals.userData;
-  const { password, userName, userImage } = req.body;
-  const userData = await authServices.updateUserData(password, userName, userImage, id);
+  const { password, userName } = req.body;
+  const userData = await authServices.updateUserData(password, userName, id);
   res.status(200).send(userData);
 }

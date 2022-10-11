@@ -1,10 +1,9 @@
 import * as homeRepository from "../repositories/homeRepository.js";
 import * as authServices from "../services/authServices.js";
 
-export async function getMyHomepage(id) {
+export async function getMyHomepage(id, userName, userImage) {
   const userData = await authServices.getUserData(id);
-  const lastUpdate = userData[0].dailyCardsTimeStamp;
-
+  const lastUpdate = userData.dailyCardsTimeStamp;
   const time = checkTime(lastUpdate);
 
   if (lastUpdate === null || time) {
@@ -30,7 +29,9 @@ export async function getMyHomepage(id) {
 
     return {
       cards: newCards,
-      status: "newCards"
+      status: "newCards",
+      userName: userName,
+      userImage: userImage
     }
   } else {
 
@@ -39,7 +40,9 @@ export async function getMyHomepage(id) {
 
     return {
       cards: previousCards,
-      status: "previousCards"
+      status: "previousCards",
+      userName: userName,
+      userImage: userImage
     }
   }
 }

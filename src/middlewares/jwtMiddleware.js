@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 
+
 export default async function jwtMiddleware(req, res, next) {
   const { authorization } = req.headers;
   const token = authorization?.replaceAll('"', "");
@@ -14,6 +15,7 @@ export default async function jwtMiddleware(req, res, next) {
   try {
     const SECRET = String(process.env.JWT_KEY);
     const decoded = jwt.verify(token, SECRET);
+
     if (!decoded) {
       throw {
         type: "not_found",
