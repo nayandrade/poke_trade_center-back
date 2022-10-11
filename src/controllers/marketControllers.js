@@ -56,5 +56,40 @@ export async function deleteFromMarket(req, res) {
   const deletedCard = await marketServices.deleteFromMarket(userId, id);
 
   res.status(202).send(deletedCard);
+}
 
+export async function searchFromMarketByNumber(req, res) {
+  const { id: userId } = res.locals.userData;
+  const { pokenumber } = req.params;
+
+  const filteredMarket = await marketServices.searchFromMarket(
+    userId,
+    pokenumber
+  );
+
+  res.status(200).send(filteredMarket);
+}
+
+export async function searchFromMarketByOwner(req, res) {
+  const { id: userId } = res.locals.userData;
+  const { pokeowner } = req.params;
+
+  const filteredMarket = await marketServices.searchFromMarket(
+    userId,
+    pokeowner
+  );
+
+  res.status(200).send(filteredMarket);
+}
+
+export async function searchFromMarketByName(req, res) {
+  const { id: userId } = res.locals.userData;
+  const { pokename } = req.params;
+
+  const filteredMarket = await marketServices.searchFromMarket(
+    userId,
+    pokename
+  );
+
+  res.status(200).send(filteredMarket);
 }

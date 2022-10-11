@@ -1,3 +1,5 @@
+import { query } from "express";
+import { use } from "express/lib/router/index.js";
 import { connection } from "../database/database.js";
 
 export async function getMarket(userId) {
@@ -135,4 +137,64 @@ export async function cancelTrade(cardId) {
     `,
     [cardId]
   );
+}
+
+export async function searchFromMarketByNumber(userId, number) {
+  return await connection.query(`
+    SELECT "usersPokemons".*, users."userName", p.number as "pokeIntentNumber", 
+    p.name as "pokeIntentName", p."pokemonImage" as "pokeIntentImage", pokemons.number, 
+    pokemons.name, pokemons."pokemonImage"
+    FROM "usersPokemons"
+    JOIN pokemons 
+    ON "usersPokemons"."pokemonId" = pokemons.id
+    JOIN users
+    ON "usersPokemons"."userId" = users.id
+    JOIN pokemons p
+    ON "usersPokemons"."pokeIntent" = p.number
+    WHERE p.number ILIKE $2
+	  AND "userId" <> $1
+    AND "isForSale" = true
+    ORDER BY "lastUpdate"
+  
+  `, [userId, number])
+}
+
+export async function searchFromMarketByOwner(userId, owner) {
+  return await connection.query(`
+    SELECT "usersPokemons".*, users."userName", p.number as "pokeIntentNumber", 
+    p.name as "pokeIntentName", p."pokemonImage" as "pokeIntentImage", pokemons.number, 
+    pokemons.name, pokemons."pokemonImage"
+    FROM "usersPokemons"
+    JOIN pokemons 
+    ON "usersPokemons"."pokemonId" = pokemons.id
+    JOIN users
+    ON "usersPokemons"."userId" = users.id
+    JOIN pokemons p
+    ON "usersPokemons"."pokeIntent" = p.number
+    WHERE users."userName" ILIKE $2
+	  AND "userId" <> $1
+    AND "isForSale" = true
+    ORDER BY "lastUpdate"
+  
+  `, [userId, owner])
+}
+
+export async function searchFromMarketByName(userId, name) {
+  return await connection.query(`
+    SELECT "usersPokemons".*, users."userName", p.number as "pokeIntentNumber", 
+    p.name as "pokeIntentName", p."pokemonImage" as "pokeIntentImage", pokemons.number, 
+    pokemons.name, pokemons."pokemonImage"
+    FROM "usersPokemons"
+    JOIN pokemons 
+    ON "usersPokemons"."pokemonId" = pokemons.id
+    JOIN users
+    ON "usersPokemons"."userId" = users.id
+    JOIN pokemons p
+    ON "usersPokemons"."pokeIntent" = p.number
+    WHERE p.name ILIKE $2
+	  AND "userId" <> $1
+    AND "isForSale" = true
+    ORDER BY "lastUpdate"
+  
+  `, [userId, name])
 }

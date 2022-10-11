@@ -106,3 +106,18 @@ export async function deleteFromMarket(userId, cardId) {
 
   return canceledTrade;
 }
+
+export async function searchFromMarketByNumber(userId, number) {
+  const { rows: market } = await marketRepository.searchFromMarketByNumber(userId, number);
+  return market;
+}
+
+export async function searchFromMarketByOwner(userId, owner) {
+  const { rows: market } = await marketRepository.searchFromMarketByOwner(userId, owner);
+  return market;
+}
+
+export async function searchFromMarketByName(userId, name) {
+  const { rows: market } = await marketRepository.searchFromMarketByName(userId, name);
+  return market;
+}
