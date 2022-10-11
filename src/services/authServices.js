@@ -33,7 +33,7 @@ export async function connectUser(user) {
   }
 
   const { id, userName, userStatus, userImage } = rows[0];
-  
+
   const validatePassword = await bcrypt.compare(password, rows[0].password);
   if (!validatePassword) {
     throw {
@@ -57,16 +57,20 @@ async function findUserByEmail(email) {
   return user;
 }
 
-export async function getUserData(id) {
-  const { rows: userData } = await authRepository.getUserData(id);
-  if(userData.pokedex <= 76) {
-    return {...userData, classification: "Treinador"}
-  } 
-  if(userData.pokedex >= 77 && userData.pokedex <= 150 ) {
-    return {...userData, classification: "Líder de ginásio"}
+export async function getUserData(userid) {
+  const { rows: userData } = await authRepository.getUserData(userid);
+
+  if (parseInt(userData[0].pokedex) <= 76) {
+    return { ...userData[0], classification: "Treinador" };
   }
-  if(userData.pokedex === 151) {
-    return {...userData, classification: "Mestre Pokemon"};
+  if (
+    parseInt(userData[0].pokedex) >= 77 &&
+    parseInt(userData[0].pokedex) <= 150
+  ) {
+    return { ...userData[0], classification: "Líder de ginásio" };
+  }
+  if (parseInt(userData[0].pokedex) === 151) {
+    return { ...userData[0], classification: "Mestre Pokemon" };
   }
 }
 // Treinador = 76

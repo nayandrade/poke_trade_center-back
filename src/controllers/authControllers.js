@@ -11,7 +11,7 @@ export async function signin(req, res) {
   const token = await authServices.connectUser(user);
 
   res.cookie("token", token);
-  res.status(200).send({ token });
+  res.status(200).send({ token });''
 }
 
 export async function getUserData(req, res) {
