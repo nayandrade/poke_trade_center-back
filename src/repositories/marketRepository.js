@@ -196,3 +196,44 @@ export async function searchFromMarketByName(userId, name) {
   
   `, [userId, `${name}%`])
 }
+
+export async function searchFromMyMarketByNumber(userId, number) {
+  return await connection.query(`
+    SELECT "usersPokemons".*, users."userName", p.number as "pokeIntentNumber", 
+    p.name as "pokeIntentName", p."pokemonImage" as "pokeIntentImage", pokemons.number, 
+    pokemons.name, pokemons."pokemonImage"
+    FROM "usersPokemons"
+    JOIN pokemons 
+    ON "usersPokemons"."pokemonId" = pokemons.id
+    JOIN users
+    ON "usersPokemons"."userId" = users.id
+    JOIN pokemons p
+    ON "usersPokemons"."pokeIntent" = p.number
+    WHERE pokemons.number = $2
+	  AND "userId" = $1
+    AND "isForSale" = true
+    ORDER BY "lastUpdate"
+  
+  `, [userId, number])
+}
+
+
+export async function searchFromMyMarketByName(userId, name) {
+  return await connection.query(`
+    SELECT "usersPokemons".*, users."userName", p.number as "pokeIntentNumber", 
+    p.name as "pokeIntentName", p."pokemonImage" as "pokeIntentImage", pokemons.number, 
+    pokemons.name, pokemons."pokemonImage"
+    FROM "usersPokemons"
+    JOIN pokemons 
+    ON "usersPokemons"."pokemonId" = pokemons.id
+    JOIN users
+    ON "usersPokemons"."userId" = users.id
+    JOIN pokemons p
+    ON "usersPokemons"."pokeIntent" = p.number
+    WHERE pokemons.name ILIKE $2
+	  AND "userId" = $1
+    AND "isForSale" = true
+    ORDER BY "lastUpdate"
+  
+  `, [userId, `${name}%`])
+}

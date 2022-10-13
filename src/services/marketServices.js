@@ -121,3 +121,13 @@ export async function searchFromMarketByName(userId, name) {
   const { rows: market } = await marketRepository.searchFromMarketByName(userId, name);
   return market;
 }
+
+export async function searchFromMyMarketByNumber(userId, number) {
+  const { rows: market } = await marketRepository.searchFromMyMarketByNumber(userId, number);
+  return market;
+}
+
+export async function searchFromMyMarketByName(userId, name) {
+  const { rows: market } = await marketRepository.searchFromMyMarketByName(userId, name);
+  return market;
+}
