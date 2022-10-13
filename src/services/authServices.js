@@ -107,3 +107,27 @@ export async function updateTimestamp(id) {
   const { rows } = await authRepository.updateTimestamp(id);
   return rows;
 }
+
+export async function updateUserPic(userImage, id) {
+  const { rows: userData } = await authRepository.updateUserPic(
+    userImage,
+    id
+  );
+
+  const {
+    id: tokenId,
+    userName: tokenUserName,
+    userStatus: tokenUserStatus,
+    userImage: tokenUserImage,
+  } = userData[0];
+
+  const token = jwt.sign(
+    { id: tokenId, userName: tokenUserName, userStatus: tokenUserStatus, userImage: tokenUserImage },
+    String(process.env.JWT_KEY),
+    {
+      expiresIn: process.env.TOKEN_DURATION,
+    }
+  );
+
+  return {...userData[0], token: token};
+}

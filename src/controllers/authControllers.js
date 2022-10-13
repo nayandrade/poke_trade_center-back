@@ -26,3 +26,10 @@ export async function updateUserData(req, res) {
   const userData = await authServices.updateUserData(password, userName, id);
   res.status(200).send(userData);
 }
+
+export async function updateUserPic(req, res) {
+  const { id } = res.locals.userData;
+  const { userImage } = req.body;
+  const userData = await authServices.updateUserPic(userImage, id);
+  res.status(200).send(userData);
+}

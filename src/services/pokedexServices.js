@@ -36,3 +36,8 @@ export async function getAllPokemons() {
   const { rows: pokemons } = await pokedexRepository.getAllPokemons();
   return pokemons;
 }
+
+export async function getMyPokemonsList(id) {
+  const { rows: pokemons } = await pokedexRepository.getMyPokemonsList(id);
+  return pokemons;
+}

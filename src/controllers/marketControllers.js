@@ -93,3 +93,27 @@ export async function searchFromMarketByName(req, res) {
 
   res.status(200).send(filteredMarket);
 }
+
+export async function searchFromMyMarketByNumber(req, res) {
+  const { id: userId } = res.locals.userData;
+  const { pokenumber } = req.params;
+
+  const filteredMarket = await marketServices.searchFromMyMarketByNumber(
+    userId,
+    pokenumber
+  );
+
+  res.status(200).send(filteredMarket);
+}
+
+export async function searchFromMyMarketByName(req, res) {
+  const { id: userId } = res.locals.userData;
+  const { pokename } = req.params;
+
+  const filteredMarket = await marketServices.searchFromMarketByName(
+    userId,
+    pokename
+  );
+
+  res.status(200).send(filteredMarket);
+}

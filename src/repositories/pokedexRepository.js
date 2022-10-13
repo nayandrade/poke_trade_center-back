@@ -26,3 +26,14 @@ export async function getAllPokemons() {
     `
   )
 }
+
+export async function getMyPokemonsList(id) {
+  return await connection.query(`
+  SELECT distinct pokemons.id, pokemons.number, pokemons.name, pokemons."pokemonImage"
+  FROM "usersPokemons" 
+  JOIN pokemons
+  ON "usersPokemons"."pokemonId" = pokemons.id
+  WHERE "userId" = $1
+  ORDER BY number
+`, [id])
+}
