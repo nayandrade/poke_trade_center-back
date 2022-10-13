@@ -62,3 +62,15 @@ export async function updateTimestamp(id) {
     [id]
   );
 }
+
+export async function updateUserPic(userImage, id) {
+
+  return await connection.query(
+    `
+    UPDATE users SET "userImage" = $1
+    WHERE id = $2
+    RETURNING *
+  `,
+    [userImage, id]
+  );
+}
