@@ -10,6 +10,6 @@ authRouter.post("/signup", validateSchemaMiddleware(signupSchema), signup);
 authRouter.post("/signin", validateSchemaMiddleware(signinSchema), signin);
 authRouter.get("/user", jwtMiddleware, getUserData);
 authRouter.put("/user", validateSchemaMiddleware(userSchema), jwtMiddleware, updateUserData);
-authRouter.put("/user", validateSchemaMiddleware(picSchema), jwtMiddleware, updateUserPic);
+authRouter.put("/userPic", validateSchemaMiddleware(picSchema), jwtMiddleware, updateUserPic);
 
 export default authRouter;
