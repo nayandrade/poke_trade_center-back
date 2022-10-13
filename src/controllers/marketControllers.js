@@ -110,7 +110,7 @@ export async function searchFromMyMarketByName(req, res) {
   const { id: userId } = res.locals.userData;
   const { pokename } = req.params;
 
-  const filteredMarket = await marketServices.searchFromMarketByName(
+  const filteredMarket = await marketServices.searchFromMyMarketByName(
     userId,
     pokename
   );

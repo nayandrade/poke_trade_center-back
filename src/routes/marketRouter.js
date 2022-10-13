@@ -26,12 +26,12 @@ marketRouter.post("/trade/:pokeintent/:pokeid", jwtMiddleware, tradeFromMarket);
 marketRouter.get("/allpokemons", jwtMiddleware, getAllPokemons);
 marketRouter.get("/mymarket", jwtMiddleware, getMyMarket);
 marketRouter.get(
-  "/mymarket/search/byname",
+  "/mymarket/search/byname/:pokename",
   jwtMiddleware,
   searchFromMyMarketByName
 );
 marketRouter.get(
-  "/mymarket/search/bynumber",
+  "/mymarket/search/bynumber/:pokenumber",
   jwtMiddleware,
   searchFromMyMarketByNumber
 );
