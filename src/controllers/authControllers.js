@@ -6,7 +6,7 @@ export async function signup(req, res) {
   res.sendStatus(201);
 }
 
-export async function signin(req, res) {  
+export async function signin(req, res) {
   const user = req.body;
   const token = await authServices.connectUser(user);
 
@@ -30,7 +30,7 @@ export async function updateUserData(req, res) {
 export async function updateUserPic(req, res) {
   const { id } = res.locals.userData;
   const { userImage } = req.body;
-  console.log(id, userImage)
+
   const userData = await authServices.updateUserPic(userImage, id);
   res.status(200).send(userData);
 }

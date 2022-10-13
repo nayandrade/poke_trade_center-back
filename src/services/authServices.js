@@ -113,7 +113,7 @@ export async function updateUserPic(userImage, id) {
     userImage,
     id
   );
-    console.log(userData)
+
   const {
     id: tokenId,
     userName: tokenUserName,
