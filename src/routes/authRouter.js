@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { signup, signin, getUserData, updateUserData } from "../controllers/authControllers.js";
+import { signup, signin, getUserData, updateUserData, updateUserPic } from "../controllers/authControllers.js";
 import validateSchemaMiddleware from "../middlewares/validateSchemaMiddleware.js";
-import { signupSchema, signinSchema, userSchema } from "../schemas/schemas.js"
+import { signupSchema, signinSchema, userSchema, picSchema } from "../schemas/schemas.js"
 import jwtMiddleware from "../middlewares/jwtMiddleware.js";
 
 const authRouter = Router();
@@ -10,6 +10,6 @@ authRouter.post("/signup", validateSchemaMiddleware(signupSchema), signup);
 authRouter.post("/signin", validateSchemaMiddleware(signinSchema), signin);
 authRouter.get("/user", jwtMiddleware, getUserData);
 authRouter.put("/user", validateSchemaMiddleware(userSchema), jwtMiddleware, updateUserData);
-
+authRouter.put("/user", validateSchemaMiddleware(picSchema), jwtMiddleware, updateUserPic);
 
 export default authRouter;
