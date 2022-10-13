@@ -25,8 +25,6 @@ export async function getMyHomepage(id, userName, userImage) {
       cards[3],
       cards[4]
     );
-    console.log('figurinhas novas')
-
     return {
       cards: newCards,
       status: "newCards",
@@ -35,8 +33,6 @@ export async function getMyHomepage(id, userName, userImage) {
       classification: userData.classification,
     }
   } else {
-
-    console.log('figurinhas antigas')
     const { rows: previousCards} = await homeRepository.getOlderCards(id)
 
     return {
@@ -61,9 +57,8 @@ function giveNewCards() {
 function checkTime(lastUpdate) {
 
   const now = Date.now(); 
-  const day = 24 * 60 * 60; 
+  const day = 24 * 60 * 60; // * 1000  
   const difference = now - day; 
-  console.log(difference, lastUpdate)
 
   if (lastUpdate < difference) {
     return true;
